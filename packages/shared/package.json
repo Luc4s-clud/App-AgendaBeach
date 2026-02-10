@@ -1,0 +1,17 @@
+{
+  "name": "@abeach/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Schemas Zod compartilhados para A Beach Arena (auth, booking, court).",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./auth": "./src/authSchemas.js",
+    "./booking": "./src/bookingSchemas.js",
+    "./court": "./src/courtSchemas.js"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}

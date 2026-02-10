@@ -1,0 +1,24 @@
+{
+  "name": "a-beach-arena-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "MVP de agendamento para arena de quadras de areia A Beach Arena (monorepo frontend + backend + shared).",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace @abeach/backend",
+    "dev:frontend": "npm run dev --workspace @abeach/frontend",
+    "build:backend": "npm run build --workspace @abeach/backend",
+    "build:frontend": "npm run build --workspace @abeach/frontend",
+    "dev": "npm run dev:backend",
+    "build": "npm run build:backend && npm run build:frontend",
+    "lint": "echo \"No lint configured yet\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
