@@ -1,0 +1,14 @@
+# Proxy /api -> backend (evita mixed content HTTPS->HTTP). Requer mod_proxy + mod_proxy_http.
+# SPA: rotas que não forem arquivo/pasta -> index.html
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  # Proxy API primeiro
+  RewriteCond %{REQUEST_URI} ^/api [NC]
+  RewriteRule ^api/?(.*)$ http://31.97.24.69:4000/api/$1 [P,L]
+  # Depois SPA
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

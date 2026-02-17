@@ -6,26 +6,16 @@ export function HomePage() {
 
   return (
     <div className="space-y-8">
-      <section className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-ocean text-white shadow-soft">
-        <div className="absolute inset-0">
-          <div
-            className="w-full h-full bg-cover bg-center blur-sm opacity-60"
-            style={{
-              backgroundImage:
-                "url('https://images.pexels.com/photos/1277390/pexels-photo-1277390.jpeg?auto=compress&cs=tinysrgb&w=1200')"
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-ocean/80 via-ocean/80 to-aqua/70" />
-        </div>
-        <div className="relative px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center gap-6">
+      <section className="card px-6 py-8 md:px-10 md:py-10">
+        <div className="flex flex-col md:flex-row md:items-center gap-6">
           <div className="flex-1 space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-aqua/80">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ocean">
               A Beach Arena
             </p>
             <h1 className="text-2xl md:text-3xl font-semibold leading-snug">
-              Agende sua quadra de areia em poucos cliques.
+              Reserve sua quadra de Beach Tennis, Vôlei e Futvôlei em poucos cliques.
             </h1>
-            <p className="text-sm md:text-base text-sand/80 max-w-xl">
+            <p className="text-sm md:text-base text-slateText/70 max-w-xl">
               Beach Tennis, Vôlei e Futvôlei em um ambiente moderno, com estrutura pensada para
               quem ama estar na areia.
             </p>

@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply bg-sand text-slateText font-sans;
+  /* Fundo principal usando o azul da logo */
+  @apply bg-ocean text-slateText font-sans;
 }
 
 .card {

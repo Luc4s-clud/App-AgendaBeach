@@ -97,7 +97,7 @@ export function ConfirmBookingModal({ open, onClose, onConfirm, court, date, sel
           onClick={() => onConfirm(sport)}
           className="btn-primary w-full justify-center"
         >
-          {loading ? 'Redirecionando...' : 'Pagar com Mercado Pago'}
+          {loading ? 'Confirmando...' : 'Confirmar reserva'}
         </button>
       </div>
     </div>

@@ -13,6 +13,7 @@ const BookingFailurePage = lazy(() => import('./pages/BookingFailurePage.jsx').t
 const BookingPendingPage = lazy(() => import('./pages/BookingPendingPage.jsx').then((m) => ({ default: m.BookingPendingPage })));
 const MyBookingsPage = lazy(() => import('./pages/MyBookingsPage.jsx').then((m) => ({ default: m.MyBookingsPage })));
 const TournamentsPage = lazy(() => import('./pages/TournamentsPage.jsx').then((m) => ({ default: m.TournamentsPage })));
+const AdminPage = lazy(() => import('./pages/AdminPage.jsx').then((m) => ({ default: m.AdminPage })));
 const VideosPage = lazy(() => import('./pages/VideosPage.jsx').then((m) => ({ default: m.VideosPage })));
 
 function AppFallback() {
@@ -51,6 +52,7 @@ export default function App() {
             <Route path="my-bookings" element={<MyBookingsPage />} />
             <Route path="tournaments" element={<TournamentsPage />} />
             <Route path="videos" element={<VideosPage />} />
+            <Route path="admin" element={<AdminPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/home" replace />} />

@@ -4,9 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sand: '#F4E9D8',
-        ocean: '#1B75BC',
-        aqua: '#2EC4B6',
+        // Paleta baseada na logo da Beach Arena
+        sand: '#F4E9D8', // fundo neutro (areia clara)
+        ocean: '#0057FF', // azul de fundo / mar
+        aqua: '#22C55E', // verde da palmeira
+        sunset: '#FF7A1A', // laranja do sol/ondas
         slateText: '#1F2937'
       },
       fontFamily: {

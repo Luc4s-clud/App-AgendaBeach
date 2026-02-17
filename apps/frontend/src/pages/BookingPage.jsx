@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
@@ -10,12 +11,19 @@ import { CourtSelector } from '../components/booking/CourtSelector.jsx';
 import { TimeGrid } from '../components/booking/TimeGrid.jsx';
 import { ConfirmBookingModal } from '../components/booking/ConfirmBookingModal.jsx';
 
+function slotToEndTime(slot) {
+  const [h, m] = slot.split(':').map(Number);
+  const endH = h + 1;
+  return `${String(endH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
 export function BookingPage() {
   const [selectedDate, setSelectedDate] = useState(() => format(new Date(), 'yyyy-MM-dd'));
   const [selectedCourtId, setSelectedCourtId] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   const courtsQuery = useQuery({
@@ -50,26 +58,28 @@ export function BookingPage() {
     }
   });
 
-  const paymentMutation = useMutation({
+  const createBookingsMutation = useMutation({
     mutationFn: async ({ slots, sport }) => {
-      const res = await api.post('/payments/create-preference', {
-        courtId: selectedCourtId,
-        date: selectedDate,
-        slots,
-        sport
-      });
-      return res.data;
+      for (const slot of slots) {
+        await api.post('/bookings', {
+          courtId: selectedCourtId,
+          date: selectedDate,
+          sport,
+          startTime: slot,
+          endTime: slotToEndTime(slot)
+        });
+      }
     },
-    onSuccess: ({ initPoint }) => {
+    onSuccess: (_, { slots }) => {
       setModalOpen(false);
       setSelectedSlots([]);
-      if (initPoint) {
-        window.location.href = initPoint;
-      }
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      toast.success(`${slots.length} reserva(s) confirmada(s)!`);
+      navigate('/booking/success');
     },
     onError: (err) => {
       console.error(err);
-      toast.error(err.response?.data?.message || 'Erro ao iniciar pagamento');
+      toast.error(err.response?.data?.message || 'Erro ao confirmar reserva');
     }
   });
 
@@ -154,11 +164,11 @@ export function BookingPage() {
       <ConfirmBookingModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConfirm={(sport) => sport && paymentMutation.mutate({ slots: selectedSlots, sport })}
+        onConfirm={(sport) => sport && createBookingsMutation.mutate({ slots: selectedSlots, sport })}
         court={selectedCourt}
         date={selectedDate}
         selectedSlots={selectedSlots}
-        loading={paymentMutation.isPending}
+        loading={createBookingsMutation.isPending}
       />
     </div>
   );

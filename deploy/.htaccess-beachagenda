@@ -1,0 +1,10 @@
+# SPA: todas as rotas que não forem arquivo ou pasta vão para index.html
+# Coloque este arquivo na pasta beachagenda do servidor como .htaccess
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

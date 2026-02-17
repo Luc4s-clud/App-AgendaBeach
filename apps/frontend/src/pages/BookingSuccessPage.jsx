@@ -8,9 +8,9 @@ export function BookingSuccessPage() {
         <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-aqua/20 text-aqua mb-4">
           <CheckCircle2 size={32} />
         </div>
-        <h1 className="text-xl font-semibold text-slateText mb-2">Pagamento confirmado!</h1>
+        <h1 className="text-xl font-semibold text-slateText mb-2">Reserva(s) confirmada(s)!</h1>
         <p className="text-sm text-slateText/70 mb-6">
-          Suas reservas foram processadas. Em instantes elas aparecerão em Meus Agendamentos.
+          Suas reservas foram confirmadas e já aparecem em Meus Agendamentos.
         </p>
         <Link
           to="/my-bookings"
