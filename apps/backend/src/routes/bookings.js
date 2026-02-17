@@ -9,6 +9,19 @@ bookingsRouter.get('/bookings', async (req, res, next) => {
   try {
     const hasCourtAndDate = req.query.courtId && req.query.date;
 
+    // Modo admin: lista últimas reservas independente de usuário/quadra
+    if (req.query.admin === 'true' && req.user?.role === 'ADMIN') {
+      const bookings = await req.prisma.booking.findMany({
+        include: {
+          user: { select: { id: true, name: true, email: true } },
+          court: true
+        },
+        orderBy: [{ date: 'desc' }, { startTime: 'desc' }],
+        take: 100
+      });
+      return res.json(bookings);
+    }
+
     if (hasCourtAndDate) {
       const { courtId, date } = bookingQuerySchema.parse(req.query);
 

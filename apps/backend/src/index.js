@@ -10,6 +10,7 @@ import { courtsRouter } from './routes/courts.js';
 import { bookingsRouter } from './routes/bookings.js';
 import { meRouter } from './routes/me.js';
 import { paymentsRouter } from './routes/payments.js';
+import { tournamentsRouter } from './routes/tournaments.js';
 import { authMiddleware } from './middleware/auth.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -33,6 +34,7 @@ app.use('/api/auth', authRouter);
 app.use('/api', authMiddleware.optional, meRouter);
 app.use('/api', courtsRouter);
 app.use('/api', authMiddleware.optional, paymentsRouter);
+app.use('/api', authMiddleware.optional, tournamentsRouter);
 app.use('/api', authMiddleware.required, bookingsRouter);
 
 // Healthcheck simples

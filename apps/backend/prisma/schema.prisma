@@ -35,6 +35,19 @@ enum PaymentStatus {
   EXPIRED
 }
 
+enum TournamentStatus {
+  UPCOMING
+  ONGOING
+  FINISHED
+  CANCELED
+}
+
+enum TournamentLeague {
+  GOLD
+  SILVER
+  BRONZE
+}
+
 model User {
   id           Int       @id @default(autoincrement())
   name         String
@@ -44,6 +57,7 @@ model User {
   createdAt    DateTime  @default(now())
   bookings     Booking[]
   pendingPayments PendingPayment[]
+  tournamentRegistrations TournamentRegistration[]
 }
 
 model Court {
@@ -97,4 +111,38 @@ model PendingPayment {
   @@index([mpPreferenceId])
   @@index([status])
 }
+
+model Tournament {
+  id          Int              @id @default(autoincrement())
+  name        String
+  description String?
+  sport       Sport
+  startDate   DateTime         @db.Date
+  endDate     DateTime?        @db.Date
+  /// Data limite para inscrições
+  registrationEndDate DateTime? @db.Date
+  /// Ligas / categorias disponíveis
+  hasGold     Boolean          @default(false)
+  hasSilver   Boolean          @default(false)
+  hasBronze   Boolean          @default(false)
+  status      TournamentStatus @default(UPCOMING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model TournamentRegistration {
+  id           Int              @id @default(autoincrement())
+  userId       Int
+  tournamentId Int
+  league       TournamentLeague
+  createdAt    DateTime         @default(now())
+
+  user       User       @relation(fields: [userId], references: [id])
+  tournament Tournament @relation(fields: [tournamentId], references: [id])
+
+  @@index([userId])
+  @@index([tournamentId])
+  @@unique([userId, tournamentId, league])
+}
+
 

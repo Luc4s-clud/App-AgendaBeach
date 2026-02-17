@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding courts...');
 
+  // Deletar na ordem correta por causa de foreign keys (courtId)
+  await prisma.pendingPayment.deleteMany({});
+  await prisma.booking.deleteMany({});
   await prisma.court.deleteMany({});
 
   const courtsData = [
