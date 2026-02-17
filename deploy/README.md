@@ -1,5 +1,42 @@
 # Deploy – A Beach Arena
 
+## 0. Subir o backend via Git (fluxo recomendado)
+
+Sempre que houver alteração local no backend, use este fluxo.
+
+### No seu PC (Windows)
+
+```powershell
+cd C:\TESTES\App-AgendaBeach
+
+git status
+git add .
+git commit -m "backend: descrição da alteração"
+git push origin master
+```
+
+### Na VPS
+
+```bash
+cd /var/www/abeach
+git pull origin master
+
+cd apps/backend
+# Só se você alterou o schema Prisma (novas tabelas/colunas):
+npx prisma db push
+
+pm2 restart abeach-backend
+```
+
+Ou use o script (na VPS):
+
+```bash
+cd /var/www/abeach
+./deploy/pull-and-restart-backend.sh
+```
+
+---
+
 ## 1. Backend (systemd)
 
 Para manter o backend rodando na VPS:

@@ -1,6 +1,7 @@
 import express from 'express';
 import { parse } from 'date-fns';
 import { bookingCreateSchema, bookingQuerySchema } from '@abeach/shared';
+import { notifyAdminNewBookingTelegram } from '../services/telegram.js';
 
 export const bookingsRouter = express.Router();
 
@@ -117,6 +118,20 @@ bookingsRouter.post('/bookings', async (req, res, next) => {
           status: 'ACTIVE'
         }
       });
+
+      // Notificação assíncrona para o admin via Telegram
+      req.prisma.court
+        .findUnique({ where: { id: courtId } })
+        .then((court) =>
+          notifyAdminNewBookingTelegram({
+            booking,
+            user: req.user,
+            court
+          })
+        )
+        .catch((err) => {
+          console.error('Erro ao buscar quadra para notificação Telegram:', err);
+        });
 
       return res.status(201).json(booking);
     } catch (err) {

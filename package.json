@@ -14,7 +14,8 @@
     "build:frontend": "npm run build --workspace @abeach/frontend",
     "dev": "npm run dev:backend",
     "build": "npm run build:backend && npm run build:frontend",
-    "lint": "echo \"No lint configured yet\""
+    "lint": "echo \"No lint configured yet\"",
+    "deploy:backend": "echo \"1) No PC: git add . && git commit -m 'backend: alterações' && git push origin master\" && echo \"2) Na VPS: cd /var/www/abeach && ./deploy/pull-and-restart-backend.sh\""
   },
   "engines": {
     "node": ">=18.0.0"
